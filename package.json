@@ -1,0 +1,16 @@
+{
+  "name": "taskscheduler",
+  "version": "1.0.0",
+  "description": "basic crud application",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "crud",
+    "application",
+    "backend"
+  ],
+  "author": "Vivek Maddeshiya",
+  "license": "MIT"
+}
