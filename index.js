@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 
 
 const userRoute = require("./routes/userRoute");
-// const taskRoute = require("./routes/taskRoute");
+const taskRoute = require("./routes/taskRoute");
 
 
 
@@ -24,7 +24,7 @@ app.use(express.json());
 
 
 app.use("/user", userRoute);
-// app.use("/task", taskRoute);
+app.use("/task", taskRoute);
 
 const port = 5000;
 

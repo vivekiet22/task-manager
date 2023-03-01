@@ -6,6 +6,9 @@ const User = require("../models/user");
 
 const JWT_TOKEN = "VivekMaddeshiya"
 
+// create a new user
+// POST "user/register".
+
 router.post("/register",async (req, res) => {
     const { name,email,password } = req.body;
   
@@ -17,8 +20,15 @@ router.post("/register",async (req, res) => {
           .json({ status: "error", msg: "User already exists" });
       }
       user = await User.create({ name,email,password });
-      const token = jwt.sign({ id: user.id }, JWT_TOKEN, {
-        expiresIn: 3600
+      const data = {
+        user:{
+            email:user.email,
+            id:user.id,
+            name:user.name
+        }
+      }
+      const token = jwt.sign(data, JWT_TOKEN, {
+        expiresIn: 7200
       });
       res.status(201).json({ status: "success", data: { user, token } });
     } catch (err) {
@@ -36,8 +46,15 @@ router.post("/login",async (req, res) => {
       const user = await User.findOne({ email }).select("+password");
   
       if (user && (await bcrypt.compare(password, user.password))) {
-        const token = jwt.sign({ id: user.id }, JWT_TOKEN, {
-          expiresIn: 3600
+        const data = {
+            user:{
+                email:user.email,
+                id:user.id,
+                name:user.name
+            }
+          }
+        const token = jwt.sign(data, JWT_TOKEN, {
+          expiresIn: 7200
         });
         res.status(200).json({ status: "success", data: { token } });
       } else {
