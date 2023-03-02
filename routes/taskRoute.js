@@ -5,6 +5,7 @@ const Task = require("../models/task");
 
 const JWT_TOKEN = "VivekMaddeshiya";
 
+
 // Ensure user is signed in
 router.use(async (req, res, next) => {
   const token = req.header("x-auth-token");
@@ -24,6 +25,8 @@ router.use(async (req, res, next) => {
 });
 
 // get all task of the user
+// GET "/task/fetchall".login required
+
 router.get("/fetchall", async (req, res) => {
   try {
     const tasks = await Task.find({ assignee: req.user.id });
@@ -35,6 +38,8 @@ router.get("/fetchall", async (req, res) => {
 });
 
 // create a new task
+// POST "/task/create".login required
+
 router.post("/create", async (req, res) => {
   try {
     const { name, description, assignee, expireOn } = req.body;
@@ -51,7 +56,8 @@ router.post("/create", async (req, res) => {
 });
 
 // update a task
-// endpoint - /updatetask/:id
+// PUT "task//updatetask/:id".login required
+
 router.put("/updatetask/:id", async (req, res) => {
   const { name, description, expireOn,completed } = req.body;
   try {
@@ -92,6 +98,8 @@ router.put("/updatetask/:id", async (req, res) => {
 
 
 // Delete a task by its id
+// Delete "task.deletetask/:id".login required
+
 router.delete('/deletetask/:id',async (req,res)=>{
     try {
       
@@ -105,7 +113,7 @@ router.delete('/deletetask/:id',async (req,res)=>{
         return res.status(401).send("Not Allowed")      
       }
       note = await Task.findByIdAndDelete(req.params.id)
-      res.json({"Success":"Note has been deleted"})
+      res.json({"Success":"Task has been deleted"})
     } catch (error) {
       console.error(error.message);
       res.status(500).send("Internal Server Error");
