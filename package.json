@@ -9,7 +9,10 @@
   "keywords": [
     "crud",
     "application",
-    "backend"
+    "backend",
+    'backend api',
+    "task manager",
+    "task scheduler"
   ],
   "author": "Vivek Maddeshiya",
   "license": "MIT",
@@ -17,6 +20,7 @@
     "bcrypt": "^5.1.0",
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.0",
+    "memory-cache": "^0.2.0",
     "mongoose": "^7.0.0",
     "validator": "^13.9.0"
   }
