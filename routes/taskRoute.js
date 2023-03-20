@@ -5,6 +5,29 @@ const Task = require("../models/task");
 
 const JWT_TOKEN = "VivekMaddeshiya";
 
+const mcache = require('memory-cache')
+// cache implementation for faster querying of user's task list data
+let cache = (duration)=>{
+  return (req,res,next)=>{
+    let key = '__express__'+req.originalUrl || req.url
+    let cachedBody = mcache.get(key)
+    if (cachedBody){
+      console.log("found in cache")
+      res.send(cachedBody)
+      return 
+    }
+    else{
+      res.sendResponse = res.send
+      res.send = (body)=>{
+        mcache.put(key,body,duration*1000)
+        console.log("added to cache")
+        res.sendResponse(body)
+      }
+      next()
+    }
+  }
+}
+
 // Ensure user is signed in
 router.use(async (req, res, next) => {
   const token = req.header("x-auth-token");
@@ -26,7 +49,7 @@ router.use(async (req, res, next) => {
 // get all task of the user
 // GET "/task/fetchall".login required
 
-router.get("/fetchall", async (req, res) => {
+router.get("/fetchall",cache(60), async (req, res) => {
   try {
     const tasks = await Task.find({ assignee: req.user.id });
     res.json(tasks);
