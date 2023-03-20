@@ -5,7 +5,6 @@ const Task = require("../models/task");
 
 const JWT_TOKEN = "VivekMaddeshiya";
 
-
 // Ensure user is signed in
 router.use(async (req, res, next) => {
   const token = req.header("x-auth-token");
